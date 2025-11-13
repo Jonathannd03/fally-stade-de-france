@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { supabaseServer } from '@/lib/supabase-server';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,6 +16,15 @@ export async function GET() {
       .order('created_at', { ascending: false });
 
     if (votesError) throw votesError;
+
+    // Fetch page views using service role (for admin access)
+    const { data: allPageViews, error: pageViewsError } = await supabaseServer
+      .from('page_views')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    // Don't throw error if page_views table doesn't exist yet
+    const pageViews = pageViewsError ? [] : (allPageViews || []);
 
     // Calculate analytics
     const totalVotes = allVotes?.length || 0;
@@ -100,6 +110,41 @@ export async function GET() {
       new Date(vote.created_at) >= sevenDaysAgo
     ).length || 0;
 
+    // Calculate visitor statistics
+    const totalPageViews = pageViews.length;
+    const uniqueVisitors = new Set(pageViews.map((pv: any) => pv.visitor_id)).size;
+    const uniqueSessions = new Set(pageViews.map((pv: any) => pv.session_id).filter(Boolean)).size;
+
+    // Page views in last 24 hours
+    const pageViewsLast24h = pageViews.filter((pv: any) =>
+      new Date(pv.created_at) >= twentyFourHoursAgo
+    ).length;
+
+    // Page views in last 7 days
+    const pageViewsLast7Days = pageViews.filter((pv: any) =>
+      new Date(pv.created_at) >= sevenDaysAgo
+    ).length;
+
+    // Page views per day for the last 30 days
+    const pageViewsPerDay: Record<string, number> = {};
+    pageViews.forEach((pv: any) => {
+      const viewDate = new Date(pv.created_at);
+      if (viewDate >= thirtyDaysAgo) {
+        const dateKey = viewDate.toISOString().split('T')[0];
+        pageViewsPerDay[dateKey] = (pageViewsPerDay[dateKey] || 0) + 1;
+      }
+    });
+
+    // Most visited pages
+    const pagePathCounts: Record<string, number> = {};
+    pageViews.forEach((pv: any) => {
+      pagePathCounts[pv.page_path] = (pagePathCounts[pv.page_path] || 0) + 1;
+    });
+    const topPages = Object.entries(pagePathCounts)
+      .map(([path, views]) => ({ path, views }))
+      .sort((a, b) => b.views - a.views)
+      .slice(0, 10);
+
     return NextResponse.json({
       success: true,
       data: {
@@ -110,6 +155,12 @@ export async function GET() {
           avgVotesPerSong,
           votesLast24h,
           votesLast7Days,
+          // Visitor statistics
+          totalPageViews,
+          uniqueVisitors,
+          uniqueSessions,
+          pageViewsLast24h,
+          pageViewsLast7Days,
         },
         topSongs,
         voteCounts,
@@ -117,6 +168,9 @@ export async function GET() {
         voteDistribution,
         topVoters,
         recentActivity,
+        // Visitor analytics
+        pageViewsPerDay,
+        topPages,
         lastUpdated: new Date().toISOString(),
       },
     });

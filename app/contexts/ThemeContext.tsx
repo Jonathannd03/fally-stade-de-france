@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'light' | 'dark';
+// light, dark 
+type Theme = "dark" | "dark";
 
 type ThemeContextType = {
   theme: Theme;
@@ -22,8 +23,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setTheme(savedTheme);
     } else {
       // Check system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDark ? 'dark' : 'light');
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      // dark, light
+      setTheme(prefersDark ? "dark" : "dark");
     }
     setMounted(true);
   }, []);
@@ -42,7 +46,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [theme, mounted]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    // dark, light, dark
+    setTheme((prev) => (prev === "dark" ? "dark" : "dark"));
   };
 
   // Prevent flash of wrong theme

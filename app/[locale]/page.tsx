@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import PrototypeBanner from '../components/PrototypeBanner';
+import PageViewTracker from '../components/PageViewTracker';
 import EventHero from '../components/EventHero';
 import AboutEvent from '../components/AboutEvent';
 import VotingStats from '../components/VotingStats';
@@ -211,6 +212,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black">
+      {/* Page View Tracker */}
+      <PageViewTracker />
+
       {/* Navigation Bar */}
       <Navbar />
 

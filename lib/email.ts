@@ -1,6 +1,13 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Use placeholder value during build if env var is missing
+const resendApiKey = process.env.RESEND_API_KEY || 'placeholder-resend-key';
+
+if (resendApiKey === 'placeholder-resend-key') {
+  console.warn('Missing RESEND_API_KEY. Email notifications will not work.');
+}
+
+const resend = new Resend(resendApiKey);
 
 export async function sendAdminCreatedEmail(adminData: {
   username: string;
