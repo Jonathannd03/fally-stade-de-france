@@ -25,6 +25,12 @@ type AnalyticsData = {
     avgVotesPerSong: number;
     votesLast24h: number;
     votesLast7Days: number;
+    // Visitor statistics
+    totalPageViews: number;
+    uniqueVisitors: number;
+    uniqueSessions: number;
+    pageViewsLast24h: number;
+    pageViewsLast7Days: number;
   };
   topSongs: Array<{
     songId: string;
@@ -36,6 +42,8 @@ type AnalyticsData = {
   voteDistribution: Record<number, number>;
   topVoters: Array<{ userId: string; votes: number }>;
   recentActivity: Array<{ songId: string; userId: string; timestamp: string }>;
+  pageViewsPerDay: Record<string, number>;
+  topPages: Array<{ path: string; views: number }>;
   lastUpdated: string;
 };
 
@@ -367,6 +375,107 @@ export default function AdminDashboard() {
                 <div className="text-sm text-gray-600 dark:text-gray-400">{t('avgVotesPerSong')}</div>
                 <div className="text-xs text-gray-500 mt-2">
                   {analytics.overview.votesLast7Days} {t('votesLast7Days')}
+                </div>
+              </div>
+            </div>
+
+            {/* Visitor Statistics Section */}
+            <div className="bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-2xl p-6 border border-orange-500/30">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                <svg className="w-6 h-6 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+                Website Visitor Statistics
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                {/* Total Page Views */}
+                <div className="bg-white dark:bg-zinc-900 rounded-xl p-4 border border-gray-300 dark:border-zinc-800">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                    {analytics.overview.totalPageViews?.toLocaleString() || 0}
+                  </div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Total Page Views</div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {analytics.overview.pageViewsLast24h || 0} in last 24h
+                  </div>
+                </div>
+
+                {/* Unique Visitors */}
+                <div className="bg-white dark:bg-zinc-900 rounded-xl p-4 border border-gray-300 dark:border-zinc-800">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                    {analytics.overview.uniqueVisitors?.toLocaleString() || 0}
+                  </div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Unique Visitors</div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {((analytics.overview.totalPageViews || 0) / (analytics.overview.uniqueVisitors || 1)).toFixed(1)} pages/visitor
+                  </div>
+                </div>
+
+                {/* Unique Sessions */}
+                <div className="bg-white dark:bg-zinc-900 rounded-xl p-4 border border-gray-300 dark:border-zinc-800">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                    {analytics.overview.uniqueSessions?.toLocaleString() || 0}
+                  </div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Active Sessions</div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {((analytics.overview.totalPageViews || 0) / (analytics.overview.uniqueSessions || 1)).toFixed(1)} pages/session
+                  </div>
+                </div>
+
+                {/* Page Views Last 7 Days */}
+                <div className="bg-white dark:bg-zinc-900 rounded-xl p-4 border border-gray-300 dark:border-zinc-800">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                    {analytics.overview.pageViewsLast7Days?.toLocaleString() || 0}
+                  </div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Views (7 Days)</div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {((analytics.overview.pageViewsLast7Days || 0) / 7).toFixed(0)} avg/day
+                  </div>
+                </div>
+
+                {/* Engagement Rate */}
+                <div className="bg-white dark:bg-zinc-900 rounded-xl p-4 border border-gray-300 dark:border-zinc-800">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center">
+                      <svg className="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                    {((analytics.overview.totalVotes / (analytics.overview.uniqueVisitors || 1)) * 100).toFixed(1)}%
+                  </div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">Vote Rate</div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    votes per visitor
+                  </div>
                 </div>
               </div>
             </div>

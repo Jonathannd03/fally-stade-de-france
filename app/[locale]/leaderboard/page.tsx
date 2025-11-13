@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useAudio } from '../../contexts/AudioContext';
 import Navbar from '../../components/Navbar';
 import PrototypeBanner from '../../components/PrototypeBanner';
+import PageViewTracker from '../../components/PageViewTracker';
 import Footer from '../../components/Footer';
 
 type Song = {
@@ -89,6 +90,9 @@ export default function Leaderboard() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black">
+      {/* Page View Tracker */}
+      <PageViewTracker />
+
       {/* Navigation */}
       <Navbar />
 
