@@ -32,12 +32,12 @@ export default function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo & Brand */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
             {/* Eagle Icon */}
-            <div className="relative w-12 h-12 flex items-center justify-center">
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center flex-shrink-0">
               <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg opacity-20 group-hover:opacity-30 transition-opacity blur-xl"></div>
               <svg
-                className="w-8 h-8 text-gray-900 dark:text-white group-hover:text-orange-300 transition-all duration-300 relative z-10 group-hover:scale-110"
+                className="w-6 h-6 sm:w-8 sm:h-8 text-gray-900 dark:text-white group-hover:text-orange-300 transition-all duration-300 relative z-10 group-hover:scale-110"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -46,11 +46,11 @@ export default function Navbar() {
               </svg>
             </div>
 
-            <div className="hidden sm:block">
-              <div className="text-xl font-bold text-gray-900 dark:text-white">
+            <div>
+              <div className="text-sm sm:text-base md:text-xl font-bold text-gray-900 dark:text-white">
                 FALLY IPUPA
               </div>
-              <div className="text-xs text-orange-600 dark:text-orange-300 font-medium tracking-wider">
+              <div className="text-[9px] sm:text-[10px] md:text-xs text-orange-600 dark:text-orange-300 font-medium tracking-wider">
                 L'AIGLE • THE EAGLE
               </div>
             </div>
