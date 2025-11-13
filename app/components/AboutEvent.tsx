@@ -44,43 +44,45 @@ export default function AboutEvent() {
   ];
 
   return (
-    <div id="about" className="relative py-20 bg-white dark:bg-black">
-      <div className="container mx-auto px-4">
+    <div id="about" className="relative py-8 sm:py-12 md:py-16 lg:py-20 bg-black">
+      <div className="container mx-auto px-3 sm:px-4">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-orange-500/20 dark:bg-orange-500/10 border border-orange-500/50 dark:border-orange-500/30 rounded-full text-orange-400 text-sm font-semibold mb-4 uppercase tracking-wider">
+        <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-12 md:mb-16">
+          <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-orange-500/10 border border-orange-500/30 rounded-full text-orange-400 text-xs sm:text-sm font-semibold mb-3 sm:mb-4 uppercase tracking-wider">
             {t('badge')}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 md:mb-6 px-2">
             {t('title')}{' '}
             <span className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
               {t('titleHighlight')}
             </span>
           </h2>
-          <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed px-2">
             {t('description')}
           </p>
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-12 md:mb-16">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-zinc-900/50 dark:to-black/50 backdrop-blur-xl rounded-2xl p-6 border border-gray-300 dark:border-zinc-800/50 hover:border-orange-500/50 transition-all duration-300 hover:transform hover:scale-105"
+              className="group relative bg-gradient-to-br from-zinc-900/50 to-black/50 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-zinc-800/50 hover:border-orange-500/50 transition-all duration-300 hover:transform hover:scale-105"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 to-red-500/0 group-hover:from-orange-500/10 group-hover:to-red-500/10 rounded-2xl transition-all duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/0 to-red-500/0 group-hover:from-orange-500/10 group-hover:to-red-500/10 rounded-xl sm:rounded-2xl transition-all duration-300"></div>
 
               <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl flex items-center justify-center text-orange-400 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {feature.icon}
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-lg sm:rounded-xl flex items-center justify-center text-orange-400 mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 [&>svg]:w-full [&>svg]:h-full">
+                    {feature.icon}
+                  </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-orange-300 transition-colors">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-orange-300 transition-colors">
                   {feature.title}
                 </h3>
 
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p className="text-xs sm:text-sm md:text-base text-gray-400 leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -90,31 +92,31 @@ export default function AboutEvent() {
 
         {/* Why Vote Section */}
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-orange-900/30 via-zinc-900/50 to-red-900/30 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-orange-500/30 shadow-2xl">
-            <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="bg-gradient-to-br from-orange-900/30 via-zinc-900/50 to-red-900/30 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 border border-orange-500/30 shadow-2xl">
+            <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8">
               <div className="flex-shrink-0">
-                <div className="w-24 h-24 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-2xl shadow-orange-500/50">
-                  <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-2xl shadow-orange-500/50">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M18 13h-.68l-2 2h1.91L19 17H5l1.78-2h2.05l-2-2H6l-3 3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-4l-3-3zm-1-5.05l-4.95 4.95-3.54-3.54 4.95-4.95L17 7.95zm-4.24-5.66L6.39 8.66c-.39.39-.39 1.02 0 1.41l4.95 4.95c.39.39 1.02.39 1.41 0l6.36-6.36c.39-.39.39-1.02 0-1.41L14.16 2.3c-.38-.4-1.01-.4-1.4-.01z"/>
                   </svg>
                 </div>
               </div>
 
               <div className="flex-1 text-center md:text-left">
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3 md:mb-4">
                   {t('boxTitle')}
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                <p className="text-xs sm:text-sm md:text-base text-gray-300 leading-relaxed mb-3 sm:mb-4">
                   {t('boxDescription')}
                 </p>
-                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                  <span className="px-4 py-2 bg-orange-500/30 dark:bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-600 dark:text-orange-300 text-sm font-semibold">
+                <div className="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start">
+                  <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300 text-xs sm:text-sm font-semibold">
                     {t('tag1')}
                   </span>
-                  <span className="px-4 py-2 bg-red-500/30 dark:bg-red-500/20 border border-red-500/50 rounded-full text-red-600 dark:text-red-300 text-sm font-semibold">
+                  <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-red-500/20 border border-red-500/50 rounded-full text-red-300 text-xs sm:text-sm font-semibold">
                     {t('tag2')}
                   </span>
-                  <span className="px-4 py-2 bg-orange-500/30 dark:bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-600 dark:text-orange-300 text-sm font-semibold">
+                  <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-300 text-xs sm:text-sm font-semibold">
                     {t('tag3')}
                   </span>
                 </div>

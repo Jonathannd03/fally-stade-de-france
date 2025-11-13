@@ -64,46 +64,46 @@ export default function VotingStats({ totalSongs, totalVotes, userVotes, topAlbu
   ];
 
   return (
-    <div className="bg-white dark:bg-black py-12">
-      <div className="container mx-auto px-4">
+    <div className="bg-black py-6 sm:py-8 md:py-12">
+      <div className="container mx-auto px-3 sm:px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <div className="text-center mb-4 sm:mb-6 md:mb-8">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1.5 sm:mb-2 px-2">
               {t('title')} <span className="bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">{t('titleHighlight')}</span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">{t('subtitle')}</p>
+            <p className="text-sm sm:text-base text-gray-400 px-2">{t('subtitle')}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {stats.map((stat, index) => (
               <div
                 key={index}
-                className={`group relative bg-gray-100 dark:bg-zinc-900 backdrop-blur-xl rounded-2xl p-6 border ${stat.borderColor} hover:border-opacity-70 transition-all duration-300 hover:transform hover:scale-105 overflow-hidden`}
+                className={`group relative bg-zinc-900 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border ${stat.borderColor} hover:border-opacity-70 transition-all duration-300 hover:transform hover:scale-105 overflow-hidden`}
               >
                 {/* Animated background gradient */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
 
                 <div className="relative">
                   {/* Icon */}
-                  <div className={`w-14 h-14 ${stat.bgColor} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <div className={`bg-gradient-to-br ${stat.color} bg-clip-text text-transparent`}>
+                  <div className={`w-12 h-12 sm:w-14 sm:h-14 ${stat.bgColor} rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <div className="text-orange-500">
                       {stat.icon}
                     </div>
                   </div>
 
                   {/* Value */}
-                  <div className={`text-3xl font-bold mb-2 bg-gradient-to-br ${stat.color} bg-clip-text text-transparent ${stat.isText ? 'text-lg truncate' : ''}`}>
+                  <div className={`text-2xl sm:text-3xl font-bold mb-1.5 sm:mb-2 bg-gradient-to-br ${stat.color} bg-clip-text text-transparent ${stat.isText ? 'text-base sm:text-lg truncate' : ''}`}>
                     {stat.value}
                   </div>
 
                   {/* Label */}
-                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium uppercase tracking-wider">
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium uppercase tracking-wider">
                     {stat.label}
                   </div>
                 </div>
 
                 {/* Decorative corner */}
-                <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${stat.color} opacity-5 rounded-full blur-2xl`}></div>
+                <div className={`absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br ${stat.color} opacity-5 rounded-full blur-2xl`}></div>
               </div>
             ))}
           </div>
